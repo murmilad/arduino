@@ -3,4 +3,5 @@
 ## Cheme
 ![](cheme.jpg)
 ## Amplifier
-![](WTV020_manual_V1.3.pdf)
+![](amp.jpg)
+
