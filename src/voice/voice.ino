@@ -1,36 +1,36 @@
-/*
- Example: Control a WTV020-SD-16P module to play voices from an Arduino board.
- Created by Diego J. Arevalo, August 6th, 2012.
- Released into the public domain.
- */
+#include <SoftwareSerial.h>
+#include <DFPlayerMini_Fast.h>
 
-#include <Wtv020sd16p.h>
+SoftwareSerial mySerial(10, 11); // RX, TX
+DFPlayerMini_Fast myMP3;
 
-int resetPin = 2;  // The pin number of the reset pin.
-int clockPin = 3;  // The pin number of the clock pin.
-int dataPin = 4;  // The pin number of the data pin.
-int busyPin = 5;  // The pin number of the busy pin.
+void setup()
+{
+  Serial.begin(115200);
+  mySerial.begin(9600);
 
-/*
-Create an instance of the Wtv020sd16p class.
- 1st parameter: Reset pin number.
- 2nd parameter: Clock pin number.
- 3rd parameter: Data pin number.
- 4th parameter: Busy pin number.
- */
-Wtv020sd16p wtv020sd16p(resetPin,clockPin,dataPin,busyPin);
+  myMP3.begin(mySerial);
+  
+  Serial.println("Setting volume to max");
+  myMP3.volume(30);
+  delay(20);
+  
+  Serial.println("Playing track 1 for 5 sec");
+  myMP3.play(1);
+  delay(5000);
 
-void setup() {
-  //Initializes the module.
-  wtv020sd16p.reset();
+  Serial.println("Sleeping for 5 sec");
+  myMP3.sleep();
+  delay(5000);
+
+  Serial.println("Waking up");
+  myMP3.wakeUp();
+
+  Serial.println("Looping track 1");
+  myMP3.loop(1);
 }
 
-void loop() {
-  //Plays synchronously an audio file. Busy pin is used for this method.
-  wtv020sd16p.playVoice(0);
-  //Plays asynchronously an audio file.
-  
-  delay(5000);
- 
-  wtv020sd16p.stopVoice();
+void loop()
+{
+  //do nothing
 }
